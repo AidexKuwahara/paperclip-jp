@@ -13,6 +13,13 @@ ui/storybook/generated/
 ui/storybook/.storybook/preview.tsx
 maps/generated/
 .env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa*
+deploy.sh
+public/setup.php
 *.tsbuildinfo
 drizzle/meta/
 .vite/

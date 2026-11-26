@@ -4,6 +4,7 @@ import { fileURLToPath } from "url";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import { japaneseLocalePlugin } from "./src/lib/vite-ja-locale.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -43,7 +44,7 @@ const previewAsIndex = {
 };
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), previewAsIndex],
+  plugins: [japaneseLocalePlugin(), react(), tailwindcss(), previewAsIndex],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

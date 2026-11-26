@@ -1,14 +1,21 @@
 import { describe, expect, it } from "vitest";
-import { t } from ".";
+import { i18n, t } from ".";
 import en from "./locales/en.json";
+import ja from "./locales/ja.json";
 import { localeMessages } from "./locales";
 import { validateLocaleMessages } from "./locale-validation";
 
 describe("locale validation", () => {
-  it("resolves English messages with key and default fallbacks", () => {
-    expect(t("app.noCompanies.title")).toBe(en.app.noCompanies.title);
-    expect(t("app.missing", { defaultValue: "Fallback" })).toBe("Fallback");
-    expect(t("app.missing")).toBe("app.missing");
+  it("resolves Japanese by default and English when selected", async () => {
+    try {
+      expect(t("app.noCompanies.title")).toBe(ja.app.noCompanies.title);
+      await i18n.changeLanguage("en");
+      expect(t("app.noCompanies.title")).toBe(en.app.noCompanies.title);
+      expect(t("app.missing", { defaultValue: "Fallback" })).toBe("Fallback");
+      expect(t("app.missing")).toBe("app.missing");
+    } finally {
+      await i18n.changeLanguage("ja");
+    }
   });
 
   it("accepts registered locale files", () => {

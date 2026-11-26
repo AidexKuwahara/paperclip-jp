@@ -4,6 +4,7 @@ import { fileURLToPath } from "url";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import { japaneseLocalePlugin } from "./src/lib/vite-ja-locale.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -104,7 +105,7 @@ const htmlAsIndex = {
 
 export default defineConfig({
   appType: "mpa",
-  plugins: [react(), tailwindcss(), entryAsRoot, htmlAsIndex],
+  plugins: [japaneseLocalePlugin(), react(), tailwindcss(), entryAsRoot, htmlAsIndex],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

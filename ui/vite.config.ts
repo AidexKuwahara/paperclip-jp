@@ -7,6 +7,7 @@ import { createApiProxy } from "./src/lib/vite-api-proxy";
 import { serviceWorkerBuildIdPlugin } from "./src/lib/vite-sw-build-id";
 import { readBrowserBuildCommit } from "./src/lib/vite-build-commit";
 import { preloadIssueDetail } from "./src/lib/vite-issue-detail-preload";
+import { japaneseLocalePlugin } from "./src/lib/vite-ja-locale";
 
 const apiProxy = createApiProxy();
 
@@ -16,7 +17,7 @@ export default defineConfig(({ mode }) => ({
       readBrowserBuildCommit(__dirname),
     ),
   },
-  plugins: [react(), tailwindcss(), serviceWorkerBuildIdPlugin(), preloadIssueDetail()],
+  plugins: [japaneseLocalePlugin(), react(), tailwindcss(), serviceWorkerBuildIdPlugin(), preloadIssueDetail()],
   build: {
     minify: "esbuild",
     rolldownOptions: {
