@@ -3,7 +3,8 @@
  * TypeScript の構文木を使うので、型・比較・モジュール指定子は対象にしない。
  * テスト実行時は Vite プラグイン側でこの変換を掛けない。
  */
-import ts from "typescript";
+// TypeScript 7 の公開入口は版番号だけで、構文木 API は無い。画面文言の変換だけ 5 系を使う。
+import ts from "typescript-legacy";
 
 const HELPER = "__pcJa";
 export const JA_LOCALE_IMPORT = `import { ja as ${HELPER} } from "@/i18n/ja";`;
