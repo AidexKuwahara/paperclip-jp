@@ -16,6 +16,7 @@ import { aiProviderForAdapter } from "./ai-connections/AiConnectionField";
 import { useConnectionModelsState } from "./ai-connections/useConnectionModels";
 import type { AiConnectionBinding } from "@paperclipai/shared";
 import { storeProviderApiKey } from "../lib/provider-credential";
+import { createUuid } from "../lib/uuid";
 import { SavedProviderKeySelect, useSavedProviderKeys } from "./onboarding/SavedProviderKeySelect";
 import { OnboardingGatewaySetup } from "./onboarding/OnboardingGatewaySetup";
 import { randomAgentAppearance, resolveAgentAppearance, agentAppearanceSchema } from "@paperclipai/shared";
@@ -1348,7 +1349,7 @@ function OnboardingWizardInner({
       || (!sourceSelected && setupNameConflict === JSON.stringify([createdCompanyId, agentName.trim().toLowerCase()]))) return;
     const companyId = createdCompanyId;
     preparingSetup.current.add(companyId);
-    const id = setupAgentId ?? crypto.randomUUID();
+    const id = setupAgentId ?? createUuid();
     let restoring = Boolean(setupAgentId);
     void (async () => {
       if (!setupAgentId) {
