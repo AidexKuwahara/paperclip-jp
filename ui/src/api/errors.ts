@@ -13,6 +13,7 @@
  */
 
 import { CancelledError } from "@tanstack/react-query";
+import { ja } from "@/i18n/ja";
 
 export type ErrorKind =
   | "transient"
@@ -303,7 +304,14 @@ export function describeError(err: unknown, options: DescribeErrorOptions = {}):
   const title = options.action && kind !== "transient"
     ? `Couldn't ${options.action}`
     : (coded?.title ?? fallback.title);
-  return { title, body, retryable };
+  return { title: localizeCopy(title), body: localizeCopy(body), retryable };
+}
+
+// テストは英語のまま断言する。画面ビルドだけ辞書を引く。
+function localizeCopy(text: string): string {
+  const env = import.meta.env as { MODE?: string; VITEST?: unknown };
+  if (env.MODE === "test" || env.VITEST) return text;
+  return ja(text);
 }
 
 /**

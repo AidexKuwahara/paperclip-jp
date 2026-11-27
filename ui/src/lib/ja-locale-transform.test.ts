@@ -69,6 +69,24 @@ export const View = () => <span>{/* Hello */}</span>;
     expect(code).not.toContain("__pcJa(\") : null}\")");
   });
 
+  it("空状態の message と、配列に並んだ説明文を包む", () => {
+    const code = rewritten(`export function View() {
+  const ideas = ["Research a topic and summarize the key findings", "in_progress"];
+  return <Empty message="Create your first agent to get started." className="py-10" />;
+}
+`);
+    expect(code).toContain('message={__pcJa("Create your first agent to get started.")}');
+    expect(code).toContain('__pcJa("Research a topic and summarize the key findings")');
+    expect(code).toContain('"in_progress"');
+    expect(code).toContain('className="py-10"');
+    const actions = rewritten(`export function View() {
+  return <div><button action="Get Started" /><p action="load your settings" /></div>;
+}
+`);
+    expect(actions).toContain('action={__pcJa("Get Started")}');
+    expect(actions).toContain('action="load your settings"');
+  });
+
   it("ブランド名と短い機械トークンは変換しない", () => {
     expect(isUserFacingCopy("Paperclip")).toBe(false);
     expect(isUserFacingCopy("sm")).toBe(false);

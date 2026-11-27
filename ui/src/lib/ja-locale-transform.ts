@@ -16,6 +16,12 @@ const JSX_ATTRS = new Set([
   "dialogTitle", "dialogDescription", "buttonText", "actionLabel", "primaryLabel",
   "secondaryLabel", "caption", "summary", "header", "emptyLabel", "emptyMessage",
   "errorMessage", "successMessage", "confirmLabel", "cancelLabel", "srLabel",
+  "message", "ariaLabel", "searchPlaceholder", "help", "footnote", "noneLabel", "copiedLabel",
+  "allLabel", "lede", "empty", "emptyHint", "emptyDetectHint", "jobEmptyMessage",
+  "defaultTabLabel", "composerDisabledReason", "missingLabel", "disabledHint", "chooseLabel",
+  "detectModelLabel", "reviseLabel", "configureLabel", "clearLabel", "addLabel", "runLabel",
+  "sendLabel", "rejectLabel", "advancedLabel", "defaultLabel", "searchLabel", "viewTitle",
+  "viewDescription", "copyText", "defaultText", "eyebrow", "detail", "prompt", "note", "error",
 ]);
 
 const OBJECT_PROPS = new Set([
@@ -24,7 +30,7 @@ const OBJECT_PROPS = new Set([
   "badgeLabel", "textBadge", "tooltip", "ariaLabel", "buttonText", "actionLabel", "dialogTitle",
   "dialogDescription", "primaryLabel", "secondaryLabel", "caption", "summary", "header",
   "emptyLabel", "emptyMessage", "errorMessage", "successMessage", "confirmLabel", "cancelLabel",
-  "srLabel",
+  "srLabel", "body",
 ]);
 
 const UI_CALLEES = new Set(["toast", "alert", "confirm"]);
@@ -96,13 +102,14 @@ export function rewriteJapaneseLocale(source: string, fileName = "component.tsx"
     const parent = owner.parent;
     if (!parent) return null;
     if (ts.isJsxAttribute(parent)) {
-      return JSX_ATTRS.has(jsxAttributeName(parent)) ? "jsx" : null;
+      return jsxAttrMode(jsxAttributeName(parent), node.text);
     }
     if (isUiPropertyAssignment(parent)) return "expr";
+    if (isDisplayedArrayItem(parent, node.text)) return "expr";
     if (isUiCallArgument(owner)) return "expr";
     if (ts.isJsxExpression(parent)) {
       const host = parent.parent;
-      if (ts.isJsxAttribute(host)) return JSX_ATTRS.has(jsxAttributeName(host)) ? "expr" : null;
+      if (ts.isJsxAttribute(host)) return jsxAttrMode(jsxAttributeName(host), node.text) ? "expr" : null;
       if (ts.isJsxElement(host) || ts.isJsxFragment(host) || ts.isJsxSelfClosingElement(host)) return "expr";
     }
     return null;
@@ -137,8 +144,29 @@ function isTransparentParent(parent: ts.Node, child: ts.Node): boolean {
   return chain && (parent.left === child || parent.right === child);
 }
 
+function jsxAttrMode(name: string, value: string): "jsx" | null {
+  if (JSX_ATTRS.has(name)) return "jsx";
+  // エラー文言の action は "load the task" のような断片で、ボタンラベルは大文字で始まる。
+  if (name === "action" && /^[A-Z]/.test(value)) return "jsx";
+  return null;
+}
+
 function jsxAttributeName(node: ts.JsxAttribute): string {
   return ts.isIdentifier(node.name) ? node.name.text : node.name.getText();
+}
+
+function isDisplayedArrayItem(parent: ts.Node, value: string): boolean {
+  if (!ts.isArrayLiteralExpression(parent)) return false;
+  if (!value.includes(" ")) return false;
+  if (looksLikeClassName(value)) return false;
+  return true;
+}
+
+function looksLikeClassName(value: string): boolean {
+  if (/(^|\s)(bg|text|border|ring|left|right|top|bottom|w|h|p|m|px|py|pl|pr|pt|pb|size|rounded|rotate|flex|grid|gap|min|max|font|leading|tracking|z|opacity|shadow|inset|items|justify|overflow|absolute|relative|hidden|block|inline|sm|md|lg|xl)-/.test(value)) return true;
+  if (value.includes("minmax(") || value.includes("-src ") || value.includes("-src'") || value.includes("Nerd Font")) return true;
+  if (value.startsWith("Content-Type") || value.startsWith("Liberation Mono")) return true;
+  return false;
 }
 
 function isUiPropertyAssignment(node: ts.Node): boolean {
@@ -168,6 +196,7 @@ export function isUserFacingCopy(value: string): boolean {
     return LOWER_WORDS.has(text);
   }
   if (/^[A-Z0-9]{2,6}$/.test(text) && text !== "OK") return false;
+  if (looksLikeClassName(text) && !/[.!?…]/.test(text)) return false;
   return true;
 }
 
