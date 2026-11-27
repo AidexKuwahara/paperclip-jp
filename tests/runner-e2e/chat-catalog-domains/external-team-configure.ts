@@ -195,7 +195,7 @@ async function acceptTeamBinding(ctx: ChatCatalogContext, marker: TeamBindingApp
   await expect(card).toBeVisible({ timeout: remaining() });
   for (const text of [memberName, marker.configPath]) await expect(card).toContainText(text, { timeout: remaining() });
   const response = page.waitForResponse(res => new URL(res.url()).origin === new URL(page.url()).origin && new URL(res.url()).pathname === `/api/issues/${issueId}/interactions/${marker.interactionId}/accept` && res.request().method() === "POST", { timeout: remaining() });
-  await card.getByRole("button", { name: "Create binding", exact: true }).click({ timeout: remaining() });
+  await card.getByRole("button", { name: "紐づけを作成", exact: true }).click({ timeout: remaining() });
   const submitted = await response; if (!submitted.ok()) throw new Error("The binding approval did not persist");
   const receipt = await submitted.json() as RequestConfirmationInteraction;
   if (receipt.id !== marker.interactionId || receipt.status !== "accepted" || receipt.resolvedByUserId !== userId || receipt.resolvedByAgentId || receipt.issueId !== issueId || payloadHash(receipt.payload) !== marker.payloadHash)

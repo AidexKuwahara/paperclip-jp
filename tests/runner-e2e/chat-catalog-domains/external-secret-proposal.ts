@@ -98,7 +98,7 @@ export function secretProposalDecisionClickOptions(ctx:ChatCatalogContext){
 async function review(ctx:ChatCatalogContext,row:SecretProposalView,cardId:string,approve:boolean){
  const pending=(await proposals(ctx)).filter(item=>item.status==="pending");if(pending.length!==1||pending[0]!.id!==row.id||!pending[0]!.viewerCanApprove)throw new Error("Actual human cannot review the sole intended pending binding proposal");
  const card=ctx.input.page.locator(secretProposalCardSelector(cardId));await expect(card).toBeVisible();await expect(card).toContainText("PUBLISHING_API_KEY");await expect(card).toContainText("Deployment publishing key");
- if(approve)await card.getByRole("button",{name:"Create binding",exact:true}).click(secretProposalDecisionClickOptions(ctx));
+ if(approve)await card.getByRole("button",{name:"紐づけを作成",exact:true}).click(secretProposalDecisionClickOptions(ctx));
  else{await card.getByRole("button",{name:"Reject",exact:true}).click();await expect(card.getByText("Why should this binding not be created?",{exact:true})).toBeVisible();await card.getByRole("textbox").fill("Do not grant this publishing binding yet.");await card.getByRole("button",{name:"Reject",exact:true}).click(secretProposalDecisionClickOptions(ctx));}
  await pollUntil({label:"human secret proposal decision",deadlineAt:chatCatalogNativePhaseDeadline(ctx,Date.now()+30000),intervalMs:500,load:()=>proposals(ctx),accept:rows=>rows.find(item=>item.id===row.id)?.status===(approve?"approved":"rejected")});
 }

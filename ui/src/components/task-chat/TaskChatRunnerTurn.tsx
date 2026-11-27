@@ -7,6 +7,7 @@ import { ToolCallProgressRunProvider } from "./tool-call-progress";
 import { useRef, type ReactNode } from "react";
 import type { ExecutionProjection } from "@paperclipai/shared";
 import { useSecondTick } from "@/hooks/useSecondTick";
+import { jaWorkedFor, jaWorkingFor, jaCompactDuration } from "@/i18n/ja-interaction-copy";
 import { cn } from "@/lib/utils";
 import type {
   TaskChatItem,
@@ -96,10 +97,11 @@ function RunnerTurnStatus({
   const elapsed = formatCompactDuration(elapsedMs);
 
   const failed = terminalStatusFailed(status);
-  const label = terminal ? (failed ? "Stopped" : "Worked") : waitingLabel ?? "Working";
-  const suffix = terminal
-    ? elapsed ? ` ${failed ? "after" : "for"} ${elapsed}` : ""
-    : elapsed ? `${waitingLabel ? " · " : " for "}${elapsed}` : "";
+  const label = terminal
+    ? jaWorkedFor(elapsed, failed)
+    : waitingLabel
+      ? (elapsed ? `${waitingLabel} · ${jaCompactDuration(elapsed)}` : waitingLabel)
+      : jaWorkingFor(elapsed);
 
   return (
     <span
@@ -110,7 +112,7 @@ function RunnerTurnStatus({
       aria-atomic="true"
     >
       {continuedAfterSteering ? <span data-conversation-meta="">Continued after steering · </span> : null}
-      {label}<span data-conversation-meta="">{suffix}</span>
+      {label}
     </span>
   );
 }

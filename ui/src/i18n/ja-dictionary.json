@@ -15147,5 +15147,11 @@
   "Give your agents the access they need": "エージェントに必要な接続を渡す",
   "Connect Gmail, GitHub, Notion, and more. Choose which agents get access, which accounts they use, and which actions they can take.": "Gmail、GitHub、Notion などを接続します。どのエージェントが、どのアカウントで、どの操作をできるかを選べます。",
   "Explore connectors": "コネクタを見る",
-  "Paperclip agents with their own sets of connected apps.": "接続したアプリをそれぞれ持つ Paperclip のエージェント。"
+  "Paperclip agents with their own sets of connected apps.": "接続したアプリをそれぞれ持つ Paperclip のエージェント。",
+  "Confirm secret binding": "シークレットの紐づけを確認",
+  "Create binding": "紐づけを作成",
+  "Why should this binding not be created?": "この紐づけを作成しない理由",
+  "Optional: explain why this binding should not be created.": "任意: この紐づけを作成しない理由",
+  "Approve & bind": "承認して紐づける",
+  "Open request:": "依頼を開く:"
 }

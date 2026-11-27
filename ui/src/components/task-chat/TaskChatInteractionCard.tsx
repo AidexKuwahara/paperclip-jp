@@ -14,6 +14,7 @@ import { shouldHideInteractionCard } from "@/lib/issue-thread-interactions";
 import { TaskChatCompactInteractionCard } from "./TaskChatCompactInteractionCard";
 import { TaskChatPlanPreviewCard } from "./TaskChatPlanPreviewCard";
 import { markdownToPlainText } from "@/lib/markdown-plain-text";
+import { jaInteractionText } from "@/i18n/ja-interaction-copy";
 import type { TaskChatInteractionItem } from "./task-chat-model";
 import { useCoordinatorWorkspaceEnabled } from "@/hooks/useCoordinatorWorkspaceEnabled";
 
@@ -120,10 +121,10 @@ export function TaskChatInteractionCard({
   if (presentation === "timeline" && showPendingRequest && interaction.status === "pending"
     && interaction.kind !== "connection_intent" && interaction.kind !== "ask_user_questions"
     && !shouldHideInteractionCard(interaction)) {
-    const label = interaction.title ?? (interaction.kind === "suggest_tasks" ? "Suggested tasks" : "Review request");
+    const label = jaInteractionText(interaction.title ?? (interaction.kind === "suggest_tasks" ? "Suggested tasks" : "Review request"));
     const preview = interaction.summary ?? ("prompt" in interaction.payload ? interaction.payload.prompt : null);
     // One truncated line: show the words, not the markdown syntax.
-    const previewText = preview ? markdownToPlainText(preview) : null;
+    const previewText = preview ? jaInteractionText(markdownToPlainText(preview)) : null;
     const showPlan = interaction.kind === "request_confirmation"
       && interaction.payload.target?.type === "issue_document" && interaction.payload.target.key === "plan"
       && planDocument && showPlanPreview
@@ -134,7 +135,7 @@ export function TaskChatInteractionCard({
       <div className="w-full space-y-2">
         {showPlan ? <TaskChatPlanPreviewCard source={{ kind: "saved", document: planDocument }} testId="plan-review-preview" /> : null}
         <button type="button" id={anchorId} data-interaction-id={interaction.id} data-testid="task-chat-pending-request"
-          aria-label={`Open request: ${label}`} disabled={!onReviewRequest}
+          aria-label={`${jaInteractionText("Open request:")} ${label}`} disabled={!onReviewRequest}
           onClick={() => onReviewRequest?.(interaction.id)}
           className="group flex w-full items-center gap-2 rounded-sm px-1 py-1.5 text-left text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
           <CircleHelp aria-hidden className="h-3.5 w-3.5 shrink-0" />

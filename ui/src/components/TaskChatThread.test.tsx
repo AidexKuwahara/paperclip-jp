@@ -358,7 +358,7 @@ describe.each(["legacy", "native"] as const)("historical %s system status", (run
     render(<TaskChatThread comments={[comment("old-response", "Saved the useful response.", "old"), response]}
       onAdd={async () => {}} issueStatus="in_progress" linkedRuns={[run("old", "failed", 0), run("new", "succeeded", 1)]} />);
     expect(container.textContent).toContain("The follow-up succeeded.");
-    expect(container.textContent).toContain("Worked");
+    expect(container.textContent).toContain("作業しました");
     expect(container.textContent).not.toContain("Stopped");
     expect(container.textContent).not.toContain("Run failed");
   });
@@ -3206,7 +3206,10 @@ describe("TaskChatThread runtime transcript selection", () => {
       "Continued after steering",
     );
     expect(turnHeaders[1]?.textContent).toContain(
-      "Continued after steering · Worked for",
+      "Continued after steering · ",
+    );
+    expect(turnHeaders[1]?.textContent).toContain(
+      "作業しました",
     );
   });
 
@@ -3331,7 +3334,7 @@ describe("TaskChatThread runtime transcript selection", () => {
     expect(
       container.querySelector('[data-testid="task-chat-turn-status-header"]')
         ?.textContent,
-    ).toContain("Continued after steering · Working for");
+    ).toContain("作業中");
     expect(container.textContent).toContain(
       new Date("2026-08-25T17:59:32.000Z").toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }),
     );
@@ -4285,7 +4288,7 @@ describe("TaskChatThread runtime transcript selection", () => {
       expect(
         container.querySelector('[data-testid="task-chat-turn-summary"]')
           ?.textContent,
-      ).toContain("Worked");
+      ).toContain("作業しました");
       expect(
         container.querySelector('[data-testid="task-chat-runner-turn"]'),
       ).toBeNull();

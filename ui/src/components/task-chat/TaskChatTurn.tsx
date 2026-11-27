@@ -1,3 +1,4 @@
+import { jaWorkedFor } from "@/i18n/ja-interaction-copy";
 import { groupImageResources } from "./image-resources";
 import { useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
@@ -103,11 +104,7 @@ export function TaskChatTurn({
           ) : null}
           {!item.historical ? <span className="min-w-0 truncate">
             {item.continuedAfterSteering ? "Continued after steering · " : ""}
-            {item.summary.durationLabel
-              ? `${item.summary.failed ? "Stopped" : "Worked"} for ${item.summary.durationLabel}`
-              : item.summary.failed
-                ? "Stopped"
-                : "Worked"}
+            {jaWorkedFor(item.summary.durationLabel, item.summary.failed)}
           </span> : null}
         </div> : null}
         <TaskChatRunHealthBanner failures={item.mcpStartupFailures ?? []} />
@@ -209,11 +206,10 @@ export function TaskChatTurn({
         <SummaryIcon className="h-3.5 w-3.5 shrink-0" />
       ) : null}
       <span>
-        {item.historical ? "Activity" : item.standaloneHeader && item.summary.durationLabel
-          ? `${item.summary.failed ? "Stopped" : "Worked"} for ${item.summary.durationLabel}`
-          : item.summary.failed
-            ? "Stopped"
-            : "Worked"}
+        {item.historical ? "Activity" : jaWorkedFor(
+          item.standaloneHeader ? item.summary.durationLabel : null,
+          item.summary.failed,
+        )}
       </span>
       {!item.standaloneHeader && turnSummaryMetrics(item.summary) ? (
         // Time/tools/tokens is demoted, not deleted (PAP-502): it stays in the

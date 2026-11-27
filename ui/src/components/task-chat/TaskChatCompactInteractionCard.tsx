@@ -1,3 +1,4 @@
+import { jaInteractionText } from "@/i18n/ja-interaction-copy";
 import { itemVerdictHref } from "@/lib/item-verdict-links";
 import { Link } from "@/lib/router";
 import {
@@ -207,7 +208,7 @@ function InteractionShell({
     <div className="flex min-w-0 items-center gap-2">
       <Icon aria-hidden className="h-4 w-4 shrink-0 text-muted-foreground" />
       <strong className="min-w-0 truncate text-sm font-medium text-foreground">
-        {interaction.title ?? kind.fallbackTitle}
+        {jaInteractionText(interaction.title ?? kind.fallbackTitle)}
       </strong>
       {interaction.kind === "request_confirmation" &&
       interaction.payload.target?.type === "issue_document" &&
@@ -490,7 +491,7 @@ function ReceiptDisclosure({
     request = (
       <div>
         <MarkdownBody className="text-sm text-foreground" externalReferences={externalReferences} mediaMode="reference">
-          {interaction.payload.prompt}
+          {jaInteractionText(interaction.payload.prompt)}
         </MarkdownBody>
         {interaction.status === "accepted" ? (
           <p className="mt-1 text-sm font-medium text-foreground">
@@ -605,7 +606,7 @@ function ReceiptDisclosure({
     request = (
       <div className="grid gap-2">
         <MarkdownBody className="text-sm text-foreground" externalReferences={externalReferences} mediaMode="reference">
-          {interaction.payload.prompt}
+          {jaInteractionText(interaction.payload.prompt)}
         </MarkdownBody>
         {interaction.payload.detailsMarkdown ? (
           <div className="text-sm">
@@ -965,7 +966,7 @@ function ConfirmationCard({
           <MarkdownBody className="text-sm leading-5 text-foreground" externalReferences={externalReferences} mediaMode="reference">
             {isPlanConfirmation
               ? "Do you accept this plan?"
-              : interaction.payload.prompt}
+              : jaInteractionText(interaction.payload.prompt)}
           </MarkdownBody>
           {!isPlanConfirmation ? (
             <CompactTarget interaction={interaction} />
@@ -1047,7 +1048,7 @@ function ConfirmationCard({
             id={`${interaction.id}-reject-reason-label`}
             className="text-xs font-medium leading-4 text-foreground"
           >
-            {interaction.payload.rejectReasonLabel ?? "What should change?"}
+            {jaInteractionText(interaction.payload.rejectReasonLabel ?? "What should change?")}
             {interaction.payload.rejectRequiresReason ? "" : " (optional)"}
           </p>
           {isPlanConfirmation ? (
@@ -1117,7 +1118,7 @@ function ConfirmationCard({
               {working === "reject" ? (
                 <Loader2 aria-hidden className="h-4 w-4 animate-spin" />
               ) : null}
-              {interaction.payload.rejectLabel ?? "Reject"}
+              {jaInteractionText(interaction.payload.rejectLabel ?? "Reject")}
             </Button>
           </>
         ) : (
@@ -1133,7 +1134,7 @@ function ConfirmationCard({
                   : void resolve("reject")
               }
             >
-              {interaction.payload.rejectLabel ?? "Reject"}
+              {jaInteractionText(interaction.payload.rejectLabel ?? "Reject")}
             </Button>
             <Button
               type="button"
@@ -1144,7 +1145,7 @@ function ConfirmationCard({
               {working === "accept" ? (
                 <Loader2 aria-hidden className="h-4 w-4 animate-spin" />
               ) : null}
-              {interaction.payload.acceptLabel ?? "Approve"}
+              {jaInteractionText(interaction.payload.acceptLabel ?? "Approve")}
             </Button>
           </>
         )}
@@ -1252,7 +1253,7 @@ function CheckboxConfirmationCard({
       <div className="space-y-2">
         <div id={`${interaction.id}-prompt`}>
           <MarkdownBody className="text-sm leading-5 text-foreground" externalReferences={externalReferences} mediaMode="reference">
-            {interaction.payload.prompt}
+            {jaInteractionText(interaction.payload.prompt)}
           </MarkdownBody>
         </div>
         <CompactTarget interaction={interaction} />
@@ -1313,7 +1314,7 @@ function CheckboxConfirmationCard({
             htmlFor={`${interaction.id}-reject-reason`}
             className="text-xs font-medium text-foreground"
           >
-            {interaction.payload.rejectReasonLabel ?? "What should change?"}
+            {jaInteractionText(interaction.payload.rejectReasonLabel ?? "What should change?")}
             {interaction.payload.rejectRequiresReason ? "" : " (optional)"}
           </label>
           <Textarea

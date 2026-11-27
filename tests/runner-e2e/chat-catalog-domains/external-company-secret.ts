@@ -133,7 +133,7 @@ export async function acceptCompanySecretBindingApproval(page:Page,companyId:str
     const card=page.locator(`[data-testid="task-chat-interaction"][data-interaction-id=${JSON.stringify(marker.interactionId)}]`);
     await expect(card).toBeVisible({timeout:remaining()});for(const text of [sourceSecretName,"Morgan",marker.configPath])await expect(card).toContainText(text,{timeout:remaining()});
     const response=page.waitForResponse(res=>new URL(res.url()).origin===new URL(page.url()).origin&&new URL(res.url()).pathname===`/api/issues/${issueId}/interactions/${marker.interactionId}/accept`&&res.request().method()==="POST",{timeout:remaining()});
-    await card.getByRole("button",{name:"Create binding",exact:true}).click({timeout:remaining()});const submitted=await response;
+    await card.getByRole("button",{name:"紐づけを作成",exact:true}).click({timeout:remaining()});const submitted=await response;
     if(!submitted.ok())throw new Error("Company binding human approval did not persist");
     const receipt=await submitted.json() as RequestConfirmationInteraction;
     if(receipt.id!==marker.interactionId||receipt.status!=="accepted"||receipt.resolvedByUserId!==marker.userId||receipt.resolvedByAgentId||receipt.companyId!==companyId||receipt.issueId!==issueId||createHash("sha256").update(JSON.stringify(receipt.payload)).digest("hex")!==marker.payloadHash)throw new Error("Company binding approval receipt differs from displayed current-human proposal");
