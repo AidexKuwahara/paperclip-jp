@@ -1,3 +1,4 @@
+import { ja } from "@/i18n/ja";
 import { companyProjectsQuery } from "@/lib/company-projects-query";
 import { describeError } from "../api/errors";
 import { useSelectedHeartbeatRun } from "../hooks/useSelectedHeartbeatRun";
@@ -1409,9 +1410,9 @@ export function AgentOverview({
   const agentRef = agentRouteRef(agent);
   const { openNewIssue } = useDialogActions();
   const taskSuggestions = [
-    "Research a topic and summarize the key findings",
-    "Create a step-by-step plan for a project",
-    "Review a document and suggest improvements",
+    ja("Research a topic and summarize the key findings"),
+    ja("Create a step-by-step plan for a project"),
+    ja("Review a document and suggest improvements"),
   ];
   const hasHumanCreator = Boolean(humanAgentCreatorUserId(agent.createdByUserId));
   const userDirectory = useQuery({
