@@ -8,6 +8,7 @@ import { agentHarnessType, agentRunner } from "@paperclipai/shared";
 import { adaptersApi, type AdapterInfo } from "../api/adapters";
 import { healthApi } from "@/api/health";
 import { describeError } from "@/api/errors";
+import { ja } from "@/i18n/ja";
 import { LocalProviderLoginInstructions } from "./AdapterLoginChrome";
 import { useLocalAiLogin } from "./ai-connections/useLocalAiLogin";
 import { aiConnectionsApi } from "@/api/ai-connections";
@@ -3560,7 +3561,11 @@ function OnboardingWizardInner({
                           </p>
                           <p className="text-muted-foreground">
                             Prompt:{" "}
-                            <span className="font-mono">Respond with hello.</span>
+                            <span className="font-mono">
+                              {adapterType === "claude_local" || adapterType === "paperclip_runner"
+                                ? ja("Respond with exactly the ASCII word hello. Do not translate it.")
+                                : ja("Respond with hello.")}
+                            </span>
                           </p>
                           {adapterType === "claude_local" || adapterType === "codex_local" ? (
                             <p className="text-muted-foreground">

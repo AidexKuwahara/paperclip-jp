@@ -10724,6 +10724,7 @@
   "respond in them.": "その中で応答します。",
   "Respond to the pending question to continue.": "続けるには、保留中の質問に応答します。",
   "Respond with hello.": "hello と応答します。",
+  "Respond with exactly the ASCII word hello. Do not translate it.": "ASCII の hello とだけ応答します。翻訳しないでください。",
   "Response": "応答",
   "Response and output feedback": "応答と出力のフィードバック",
   "Response size": "応答サイズ",

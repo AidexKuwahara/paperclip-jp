@@ -66,6 +66,10 @@ export function claudeModelReceipts(modelUsage: unknown) {
   return receipts.every((part) => part !== null) ? receipts : undefined;
 }
 
+/** 日本語設定の Claude は hello を「こんにちは」と訳す。確認は ASCII の hello だけを合格にする。 */
+export const CLAUDE_HELLO_PROBE_PROMPT =
+  "Respond with exactly the ASCII word hello. Do not translate it.";
+
 export function parseClaudeStreamJson(stdout: string) {
   return createClaudeStreamParser()(stdout);
 }
