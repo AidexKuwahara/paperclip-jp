@@ -88,6 +88,9 @@ export function startLocalBrowserLogin(provider: "anthropic" | "openai" | "googl
         CLAUDE_CONFIG_DIR: provider === "anthropic" ? home : process.env.CLAUDE_CONFIG_DIR,
         CODEX_HOME: provider === "openai" ? home : process.env.CODEX_HOME,
         BROWSER: "true",
+        // Claude Code 2.1.332 以降は表示用に認可 URL を短縮する。
+        // パーサは client_id などの完全なクエリを読むので、短縮前の URL を出させる。
+        ...(provider === "anthropic" ? { CLAUDE_CODE_FULL_SIGN_IN_LINK: "1" } : {}),
       };
       return new Promise((resolve, reject) => {
         child = spawn("python3", ["-u", "-c", PYTHON_PTY_BRIDGE, executable, ...args], { env, stdio: ["pipe", "pipe", "pipe"] });

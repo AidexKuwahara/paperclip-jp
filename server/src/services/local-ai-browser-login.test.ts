@@ -197,6 +197,7 @@ describe.skipIf(process.platform === "win32")("local browser subscription login"
   it("accepts a Claude browser code and stores its token only in the attempt home", async () => {
     const url = "https://claude.com/cai/oauth/authorize?client_id=cid&code=abcdefgh&code_challenge=E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM&code_challenge_method=S256&redirect_uri=https%3A%2F%2Fplatform.claude.com%2Foauth%2Fcode%2Fcallback&response_type=code&scope=user&state=0123456789abcdef";
     const home = await fakeCli("claude", [
+      '[ "$CLAUDE_CODE_FULL_SIGN_IN_LINK" = 1 ] || exit 15',
       'printf "Welcome to Claude Code\\nOpening browser to sign in…\\nBrowser didn\x27t open? Use the url below to sign in (c to copy)\\n"',
       `printf '%s\\n' '${url}'`,
       'printf "Paste code here if prompted >\\n"',
