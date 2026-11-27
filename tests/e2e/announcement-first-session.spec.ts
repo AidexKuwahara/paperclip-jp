@@ -92,7 +92,7 @@ test.describe("Announcement well (N-13)", () => {
     const now = await page.evaluate(() => Date.now());
     await page.clock.setSystemTime(now + 30 * 60_000);
     await page.keyboard.press("Shift");
-    await expect(well.getByRole("link", { name: "Explore connectors" })).toBeVisible();
+    await expect(well.getByRole("link", { name: "コネクタを見る" })).toBeVisible();
   });
 
   test("a brand-new company with its onboarding task open does not show the upsell", async ({ page }) => {
@@ -117,6 +117,6 @@ test.describe("Announcement well (N-13)", () => {
     const finish = await board.patch(`${BASE_URL}/api/issues/${firstTask.id}`, { data: { status: "done" } });
     if (!finish.ok()) throw new Error(`PATCH issue → ${finish.status()}: ${await finish.text()}`);
     await expect(well).toBeVisible({ timeout: 20_000 });
-    await expect(well.getByRole("link", { name: "Explore connectors" })).toBeVisible();
+    await expect(well.getByRole("link", { name: "コネクタを見る" })).toBeVisible();
   });
 });

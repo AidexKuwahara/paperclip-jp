@@ -100,7 +100,7 @@ test.describe("Announcement placement on a new company's first task", () => {
       const composer = page.getByTestId("task-chat-composer-dock");
       await expect(composer).toBeVisible({ timeout: 30_000 });
       const announcement = page.getByRole("complementary", { name: "Paperclip announcements" });
-      await expect(announcement.getByRole("heading", { name: CONNECTORS_ANNOUNCEMENT.title })).toBeVisible({
+      await expect(announcement.getByRole("heading", { name: "エージェントに必要な接続を渡す" })).toBeVisible({
         timeout: 15_000,
       });
       // Let the entrance animation settle before measuring.
@@ -117,7 +117,7 @@ test.describe("Announcement placement on a new company's first task", () => {
       // The card stays fully readable and dismissible.
       expect.soft(card.y + card.height, `${label}: announcement is clipped`).toBeLessThanOrEqual(viewport.height);
       await expect.soft(announcement.getByRole("button", { name: "Dismiss announcement" })).toBeInViewport();
-      await expect.soft(announcement.getByRole("link", { name: "Explore connectors" })).toBeInViewport();
+      await expect.soft(announcement.getByRole("link", { name: "コネクタを見る" })).toBeInViewport();
 
       // The account menu stays reachable while the card shows.
       const accountTrigger = page.getByRole("button", { name: "Open account menu" });
@@ -167,7 +167,7 @@ test.describe("Announcement placement on a new company's first task", () => {
     await expect.soft(accountTrigger).toBeInViewport();
     expect.soft(overlapArea(card, await box(accountTrigger, "account menu trigger"))).toBe(0);
     // The card scrolls, so its actions stay reachable.
-    const action = announcement.getByRole("link", { name: "Explore connectors" });
+    const action = announcement.getByRole("link", { name: "コネクタを見る" });
     await action.scrollIntoViewIfNeeded();
     await expect.soft(action).toBeInViewport();
     expect.soft(overlapArea(await box(action, "announcement action"), card)).toBeGreaterThan(0);

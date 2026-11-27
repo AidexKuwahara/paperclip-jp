@@ -15142,5 +15142,10 @@
   "Workspace restore failed.": "ワークスペースの復元に失敗しました。",
   "You haven't edited this, so Paperclip will replace it with the newer shipped version. Nothing you customized is affected, and your adapter credentials and settings are not touched.": "これは編集していないので、Paperclip は新しい同梱版で置き換えます。カスタマイズした内容には影響せず、アダプターの資格情報と設定にも触れません。",
   "Your draft is kept. Open Activity to retry this same publication safely.": "下書きは残しています。同じ公開を安全に再試行するには、アクティビティを開いてください。",
-  "Your draft is kept. Some parts may already have been published; check Activity before starting a new send.": "下書きは残しています。一部はすでに公開されている可能性があります。新しく送る前にアクティビティを確認してください。"
+  "Your draft is kept. Some parts may already have been published; check Activity before starting a new send.": "下書きは残しています。一部はすでに公開されている可能性があります。新しく送る前にアクティビティを確認してください。",
+  "Introducing Connectors": "コネクタのご紹介",
+  "Give your agents the access they need": "エージェントに必要な接続を渡す",
+  "Connect Gmail, GitHub, Notion, and more. Choose which agents get access, which accounts they use, and which actions they can take.": "Gmail、GitHub、Notion などを接続します。どのエージェントが、どのアカウントで、どの操作をできるかを選べます。",
+  "Explore connectors": "コネクタを見る",
+  "Paperclip agents with their own sets of connected apps.": "接続したアプリをそれぞれ持つ Paperclip のエージェント。"
 }
